@@ -1,4 +1,3 @@
-// script.js
 const courses = {
   // Semestre I
   "Introducción Al Campo Ocupacional": { unlocks: ["Problemáticas Psicosociales Y Políticas Públicas"] },
@@ -8,7 +7,7 @@ const courses = {
   "Taller De Análisis Y Comprensión De Textos En Ciencias Sociales": { unlocks: ["Análisis De La Realidad Y Pensamiento Crítico"] },
   "Taller De Habilidades Interpersonales Para El Ejercicio Profesional (I)": {},
   "Inglés Instrumental": { unlocks: ["Inglés Instrumental Para Psicología"] },
-  
+
   // Semestre II
   "Procesos Cognitivos Y Afectivos II": {},
   "Psicología Del Ciclo Vital: Infancia Y Niñez": { unlocks: ["Psicología Del Ciclo Vital: Adolescencia Y Juventud"] },
@@ -16,6 +15,15 @@ const courses = {
   "Diversidad Y Derechos Humanos": { unlocks: ["Problemáticas Psicosociales Y Políticas Públicas"] },
   "Gestión Del Conocimiento Y Uso De Tics": { unlocks: ["Taller De Comunicación Efectiva"] },
   "Taller De Habilidades Interpersonales Para Ejercicio Profesional (II)": { unlocks: ["Fundamentos De Medición Y Evaluación", "Intervención En Grupos Y Equipos"] },
+
+  // Semestre III
+  "Enfoques Psicológicos I": { unlocks: ["Psicología De La Personalidad Y Diferencias Individuales"] },
+  "Psicología Social 1 Cognición Social": { unlocks: ["Psicología Social 2 Procesos Grupales"] },
+  "Psicología Del Ciclo Vital: Adolescencia Y Juventud": { unlocks: ["Psicología Del Ciclo Vital: Adulto Y Adulto Mayor"] },
+  "Epistemología De Las Ciencias Sociales": { unlocks: ["Introducción A La Investigación En Ciencias Sociales"] },
+  "Alfabetización Estadística": { unlocks: ["Fundamentos De Medición Y Evaluación"] },
+  "Taller De Comunicación Efectiva": {},
+  "Inglés Instrumental Para Psicología": {},
 
   // Semestre IV
   "Enfoques Psicológicos II": { unlocks: ["Familias Y Contextos Socioculturales", "Psicología De La Personalidad Y Diferencias Individuales"] },
@@ -54,7 +62,7 @@ const courses = {
   "Práctica Formativa: Psicología Laboral- Organizacional": {},
   "Práctica Formativa: Psicología Comunitaria": {},
   "E.F.P: Electivo Profundización en Investigación": { unlocks: ["Seminario de Investigación I"] },
-  "Socialización Laboral": {},
+  "Socialización Labor": {},
 
   // Semestre IX
   "Práctica Formativa: Psicología Educacional": {},
@@ -66,3 +74,68 @@ const courses = {
   "Trabajo Final de Grado Sistematización de Experiencias": {},
   "Seminario de Investigación II": {}
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+  const grid = document.getElementById("grid");
+  const state = {};
+
+  function createCell(name) {
+    const div = document.createElement("div");
+    div.classList.add("cell");
+    div.textContent = name;
+    div.onclick = () => toggleCourse(name);
+    grid.appendChild(div);
+    state[name] = { element: div, approved: false };
+  }
+
+  function toggleCourse(name) {
+    const course = state[name];
+    if (!course) return;
+
+    if (course.element.classList.contains("blocked")) return;
+
+    course.approved = !course.approved;
+    updateStyles(course);
+    updateLocks();
+  }
+
+  function updateStyles(course) {
+    if (course.approved) {
+      course.element.classList.add("approved");
+      course.element.classList.remove("not-approved");
+    } else {
+      course.element.classList.remove("approved");
+      course.element.classList.add("not-approved");
+    }
+  }
+
+  function updateLocks() {
+    Object.keys(state).forEach((name) => {
+      const prerequisites = Object.keys(courses).filter((c) => courses[c].unlocks && courses[c].unlocks.includes(name));
+      const unlocked = prerequisites.every((p) => state[p].approved);
+      const course = state[name];
+
+      if (!course.approved) {
+        if (unlocked) {
+          course.element.classList.remove("blocked");
+          course.element.classList.add("not-approved");
+        } else {
+          course.element.classList.add("blocked");
+          course.element.classList.remove("not-approved");
+        }
+      }
+    });
+  }
+
+  // Inicialización
+  Object.keys(courses).forEach(createCell);
+
+  // Para los cursos sin prerrequisitos, desbloquearlos inicialmente
+  Object.keys(courses).forEach((name) => {
+    const hasPrereq = Object.keys(courses).some((c) => courses[c].unlocks && courses[c].unlocks.includes(name));
+    if (!hasPrereq) {
+      state[name].element.classList.remove("blocked");
+      state[name].element.classList.add("not-approved");
+    }
+  });
+});
