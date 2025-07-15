@@ -1,141 +1,111 @@
-const courses = {
-  // Semestre I
-  "Introducción Al Campo Ocupacional": { unlocks: ["Problemáticas Psicosociales Y Políticas Públicas"] },
-  "Procesos Cognitivos Y Afectivos I": { unlocks: ["Psicología Social 1 Cognición Social"] },
-  "Historización De La Psicología": { unlocks: ["Enfoques Psicológicos I", "Enfoques Psicológicos II"] },
-  "Fundamentos De Filosofía": { unlocks: ["Análisis De La Realidad Y Pensamiento Crítico"] },
-  "Taller De Análisis Y Comprensión De Textos En Ciencias Sociales": { unlocks: ["Análisis De La Realidad Y Pensamiento Crítico"] },
-  "Taller De Habilidades Interpersonales Para El Ejercicio Profesional (I)": {},
-  "Inglés Instrumental": { unlocks: ["Inglés Instrumental Para Psicología"] },
-
-  // Semestre II
-  "Procesos Cognitivos Y Afectivos II": {},
-  "Psicología Del Ciclo Vital: Infancia Y Niñez": { unlocks: ["Psicología Del Ciclo Vital: Adolescencia Y Juventud"] },
-  "Psicobiologia": { unlocks: ["Psicología De La Salud"] },
-  "Diversidad Y Derechos Humanos": { unlocks: ["Problemáticas Psicosociales Y Políticas Públicas"] },
-  "Gestión Del Conocimiento Y Uso De Tics": { unlocks: ["Taller De Comunicación Efectiva"] },
-  "Taller De Habilidades Interpersonales Para Ejercicio Profesional (II)": { unlocks: ["Fundamentos De Medición Y Evaluación", "Intervención En Grupos Y Equipos"] },
-
-  // Semestre III
-  "Enfoques Psicológicos I": { unlocks: ["Psicología De La Personalidad Y Diferencias Individuales"] },
-  "Psicología Social 1 Cognición Social": { unlocks: ["Psicología Social 2 Procesos Grupales"] },
-  "Psicología Del Ciclo Vital: Adolescencia Y Juventud": { unlocks: ["Psicología Del Ciclo Vital: Adulto Y Adulto Mayor"] },
-  "Epistemología De Las Ciencias Sociales": { unlocks: ["Introducción A La Investigación En Ciencias Sociales"] },
-  "Alfabetización Estadística": { unlocks: ["Fundamentos De Medición Y Evaluación"] },
-  "Taller De Comunicación Efectiva": {},
-  "Inglés Instrumental Para Psicología": {},
-
-  // Semestre IV
-  "Enfoques Psicológicos II": { unlocks: ["Familias Y Contextos Socioculturales", "Psicología De La Personalidad Y Diferencias Individuales"] },
-  "Psicología Social 2 Procesos Grupales": { unlocks: ["Psicología De La Salud", "Intervención En Grupos Y Equipos"] },
-  "Psicología Del Ciclo Vital: Adulto Y Adulto Mayor": { unlocks: ["Psicopatología Y Psiquiatría", "Familias Y Contextos Socioculturales"] },
-  "Introducción A La Investigación En Ciencias Sociales": { unlocks: ["Diseños y Análisis en Investigación Metodológica Cuantitativas", "Diseños y Análisis en Investigación Metodológica Cualitativas"] },
-  "Problemáticas Psicosociales Y Políticas Públicas": { unlocks: ["Ética Profesional"] },
-  "Análisis De La Realidad Y Pensamiento Crítico": { unlocks: ["Psicología Crítica"] },
-  "Practica Inicial": {},
-
-  // Semestre V
-  "Psicología De La Salud": {},
-  "Psicopatología Y Psiquiatría": { unlocks: ["Evaluación Psicológica"] },
-  "Fundamentos De Medición Y Evaluación": { unlocks: ["Evaluación Psicológica"] },
-  "Familias Y Contextos Socioculturales": { unlocks: ["Introducción A La Psicología Educacional"] },
-  "Psicología De La Personalidad Y Diferencias Individuales": { unlocks: ["Fundamentos En Psicología Clínica Y Psicoterapia"] },
-  "Ética Profesional": { unlocks: ["Taller De Desarrollo Personal Y Autogestión Del Aprendizaje: Ejercicio Profesional"] },
-
-  // Semestre VI
-  "Intervención En Grupos Y Equipos": { unlocks: ["Introducción A La Psicología Laboral- Organizacional"] },
-  "Evaluación Psicológica": { unlocks: ["Fundamentos En Psicología Clínica Y Psicoterapia"] },
-  "Diseño Y Evaluación De Intervenciones Psicológicas": {},
-  "Psicología Crítica": { unlocks: ["Introducción A La Psicología Comunitaria"] },
-  "Diseños y Análisis en Investigación Metodológica Cuantitativas": { unlocks: ["E.F.P: Electivo Profundización en Investigación"] },
-  "Seminarios De Profundización Temática": { unlocks: ["Trabajo Final de Grado Sistematización de Experiencias"] },
-
-  // Semestre VII
-  "Introducción A La Psicología Laboral- Organizacional": { unlocks: ["Práctica Formativa: Psicología Laboral- Organizacional"] },
-  "Introducción A La Psicología Comunitaria": { unlocks: ["Práctica Formativa: Psicología Comunitaria"] },
-  "Introducción A La Psicología Educacional": { unlocks: ["Práctica Formativa: Psicología Educacional"] },
-  "Fundamentos En Psicología Clínica Y Psicoterapia": { unlocks: ["Práctica Formativa: Psicología Clínica, Psicoterapia y Psicología de la Salud"] },
-  "Diseños y Análisis en Investigación Metodológica Cualitativas": { unlocks: ["E.F.P: Electivo Profundización en Investigación"] },
-  "Taller De Desarrollo Personal Y Autogestión Del Aprendizaje: Ejercicio Profesional": { unlocks: ["Socialización Laboral"] },
-
-  // Semestre VIII
-  "Práctica Formativa: Psicología Laboral- Organizacional": {},
-  "Práctica Formativa: Psicología Comunitaria": {},
-  "E.F.P: Electivo Profundización en Investigación": { unlocks: ["Seminario de Investigación I"] },
-  "Socialización Labor": {},
-
-  // Semestre IX
-  "Práctica Formativa: Psicología Educacional": {},
-  "Práctica Formativa: Psicología Clínica, Psicoterapia y Psicología de la Salud": {},
-  "Seminario de Investigación I": { unlocks: ["Seminario de Investigación II"] },
-
-  // Semestre X
-  "Actividad de Titulación: Práctica Profesional": {},
-  "Trabajo Final de Grado Sistematización de Experiencias": {},
-  "Seminario de Investigación II": {}
+const semesters = {
+  "Semestre I": [
+    "Introducción Al Campo Ocupacional",
+    "Procesos Cognitivos Y Afectivos I",
+    "Historización De La Psicología",
+    "Fundamentos De Filosofía",
+    "Taller De Análisis Y Comprensión De Textos En Ciencias Sociales",
+    "Taller De Habilidades Interpersonales Para El Ejercicio Profesional (I)",
+    "Inglés Instrumental"
+  ],
+  "Semestre II": [
+    "Procesos Cognitivos Y Afectivos II",
+    "Psicología Del Ciclo Vital: Infancia Y Niñez",
+    "Psicobiologia",
+    "Diversidad Y Derechos Humanos",
+    "Gestión Del Conocimiento Y Uso De Tics",
+    "Taller De Habilidades Interpersonales Para Ejercicio Profesional (II)"
+  ],
+  "Semestre III": [
+    "Enfoques Psicológicos I",
+    "Psicología Social 1 Cognición Social",
+    "Psicología Del Ciclo Vital: Adolescencia Y Juventud",
+    "Epistemología De Las Ciencias Sociales",
+    "Alfabetización Estadística",
+    "Taller De Comunicación Efectiva",
+    "Inglés Instrumental Para Psicología"
+  ],
+  "Semestre IV": [
+    "Enfoques Psicológicos II",
+    "Psicología Social 2 Procesos Grupales",
+    "Psicología Del Ciclo Vital: Adulto Y Adulto Mayor",
+    "Introducción A La Investigación En Ciencias Sociales",
+    "Problemáticas Psicosociales Y Políticas Públicas",
+    "Análisis De La Realidad Y Pensamiento Crítico",
+    "Practica Inicial"
+  ],
+  "Semestre V": [
+    "Psicología De La Salud",
+    "Psicopatología Y Psiquiatría",
+    "Fundamentos De Medición Y Evaluación",
+    "Familias Y Contextos Socioculturales",
+    "Psicología De La Personalidad Y Diferencias Individuales",
+    "Ética Profesional"
+  ],
+  "Semestre VI": [
+    "Intervención En Grupos Y Equipos",
+    "Evaluación Psicológica",
+    "Diseño Y Evaluación De Intervenciones Psicológicas",
+    "Psicología Crítica",
+    "Diseños y Análisis en Investigación Metodológica Cuantitativas",
+    "Seminarios De Profundización Temática"
+  ],
+  "Semestre VII": [
+    "Introducción A La Psicología Laboral- Organizacional",
+    "Introducción A La Psicología Comunitaria",
+    "Introducción A La Psicología Educacional",
+    "Fundamentos En Psicología Clínica Y Psicoterapia",
+    "Diseños y Análisis en Investigación Metodológica Cualitativas",
+    "Taller De Desarrollo Personal Y Autogestión Del Aprendizaje: Ejercicio Profesional"
+  ],
+  "Semestre VIII": [
+    "Práctica Formativa: Psicología Laboral- Organizacional",
+    "Práctica Formativa: Psicología Comunitaria",
+    "E.F.P: Electivo Profundización en Investigación",
+    "Socialización Labor"
+  ],
+  "Semestre IX": [
+    "Práctica Formativa: Psicología Educacional",
+    "Práctica Formativa: Psicología Clínica, Psicoterapia y Psicología de la Salud",
+    "Seminario de Investigación I"
+  ],
+  "Semestre X": [
+    "Actividad de Titulación: Práctica Profesional",
+    "Trabajo Final de Grado Sistematización de Experiencias",
+    "Seminario de Investigación II"
+  ]
 };
+function initializeGrid() {
+  const container = document.getElementById("semesters");
 
-document.addEventListener("DOMContentLoaded", () => {
-  const grid = document.getElementById("grid");
-  const state = {};
+  for (const [semestre, cursos] of Object.entries(semesters)) {
+    const section = document.createElement("section");
+    const title = document.createElement("h2");
+    const grid = document.createElement("div");
 
-  function createCell(name) {
-    const div = document.createElement("div");
-    div.classList.add("cell");
-    div.textContent = name;
-    div.onclick = () => toggleCourse(name);
-    grid.appendChild(div);
-    state[name] = { element: div, approved: false };
-  }
+    title.textContent = semestre;
+    grid.className = "grid";
 
-  function toggleCourse(name) {
-    const course = state[name];
-    if (!course) return;
-
-    if (course.element.classList.contains("blocked")) return;
-
-    course.approved = !course.approved;
-    updateStyles(course);
-    updateLocks();
-  }
-
-  function updateStyles(course) {
-    if (course.approved) {
-      course.element.classList.add("approved");
-      course.element.classList.remove("not-approved");
-    } else {
-      course.element.classList.remove("approved");
-      course.element.classList.add("not-approved");
-    }
-  }
-
-  function updateLocks() {
-    Object.keys(state).forEach((name) => {
-      const prerequisites = Object.keys(courses).filter((c) => courses[c].unlocks && courses[c].unlocks.includes(name));
-      const unlocked = prerequisites.every((p) => state[p].approved);
-      const course = state[name];
-
-      if (!course.approved) {
-        if (unlocked) {
-          course.element.classList.remove("blocked");
-          course.element.classList.add("not-approved");
-        } else {
-          course.element.classList.add("blocked");
-          course.element.classList.remove("not-approved");
-        }
-      }
+    cursos.forEach(nombre => {
+      const div = document.createElement("div");
+      div.classList.add("cell", "blocked");
+      div.textContent = nombre.replace(/\s\(I\)|\s\(II\)/g, "");
+      div.onclick = () => toggleCourse(nombre);
+      grid.appendChild(div);
+      state[nombre] = { element: div, approved: false };
     });
+
+    section.appendChild(title);
+    section.appendChild(grid);
+    container.appendChild(section);
   }
 
-  // Inicialización
-  Object.keys(courses).forEach(createCell);
-
-  // Para los cursos sin prerrequisitos, desbloquearlos inicialmente
-  Object.keys(courses).forEach((name) => {
-    const hasPrereq = Object.keys(courses).some((c) => courses[c].unlocks && courses[c].unlocks.includes(name));
-    if (!hasPrereq) {
+  // Desbloquear ramos sin prerrequisitos
+  for (const name in courses) {
+    const hasPrereq = Object.keys(courses).some(k => courses[k].unlocks?.includes(name));
+    if (!hasPrereq && state[name]) {
       state[name].element.classList.remove("blocked");
       state[name].element.classList.add("not-approved");
     }
-  });
-});
+  }
+}
