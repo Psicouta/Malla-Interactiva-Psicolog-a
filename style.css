@@ -20,7 +20,7 @@ h1 {
 }
 
 .cell {
-  background: #f8bbd0; /* rosado */
+  background: #f8bbd0;
   border: 2px solid #ec407a;
   border-radius: 10px;
   padding: 14px;
@@ -49,14 +49,14 @@ h1 {
 }
 
 .cell.not-approved {
-  background: #f8bbd0; /* rosado */
+  background: #f8bbd0;
   color: #4a148c;
   border-color: #ec407a;
   text-decoration: none;
 }
 
 .cell.approved {
-  background: #ab47bc; /* morado */
+  background: #ab47bc;
   color: white;
   border-color: #8e24aa;
   text-decoration: line-through;
