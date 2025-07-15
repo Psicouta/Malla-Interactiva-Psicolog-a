@@ -61,3 +61,11 @@ h1 {
   border-color: #8e24aa;
   text-decoration: line-through;
 }
+h2 {
+  color: #8e24aa;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  font-size: 22px;
+  border-bottom: 2px solid #ce93d8;
+  padding-bottom: 4px;
+}
