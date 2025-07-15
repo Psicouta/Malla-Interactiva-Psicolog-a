@@ -187,9 +187,9 @@ function initializeGrid() {
     title.textContent = semestre;
     grid.className = "grid";
 
-    cursos.forEach(nombre => {
+  cursos.forEach(nombre => {
       const div = document.createElement("div");
-      div.classList.add("cell", "blocked");
+      div.classList.add("cell", "not-approved");
       div.textContent = nombre.replace(/\s\(I\)|\s\(II\)/g, "");
       div.onclick = () => toggleCourse(nombre);
       grid.appendChild(div);
@@ -199,15 +199,6 @@ function initializeGrid() {
     section.appendChild(title);
     section.appendChild(grid);
     container.appendChild(section);
-  }
-
-  // Desbloquear ramos sin prerrequisitos
-  for (const name in courses) {
-    const hasPrereq = Object.keys(courses).some(k => courses[k].unlocks?.includes(name));
-    if (!hasPrereq && state[name]) {
-      state[name].element.classList.remove("blocked");
-      state[name].element.classList.add("not-approved");
-    }
   }
 
   updateLocks();
